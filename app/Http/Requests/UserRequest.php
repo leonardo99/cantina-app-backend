@@ -26,6 +26,7 @@ class UserRequest extends FormRequest
             'name' => 'required|min:2|max:255',
             'email' => 'required|unique:users|email',
             'type' => 'required|in:student,responsible,admin',
+            'phone' => 'nullable|min:14',
             'password' => ['required', 'confirmed', Password::min(8)->mixedCase()],
         ];
     }

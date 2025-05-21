@@ -17,8 +17,14 @@ class AuthController extends Controller
             return response()->json(['error' => 'Credenciais inválidas'], 401);
         }
 
-         return response()
+        return response()
             ->json(['message' => 'Login bem-sucedido'])
             ->cookie('token', $token, 120, '/', null, false, true);
+    }
+
+    public function user()
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+        return response()->json($user);
     }
 }

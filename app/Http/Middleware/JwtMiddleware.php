@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Http\Resources\UserResource;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,7 +18,7 @@ class JwtMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         try {
-            JWTAuth::parseToken()->authenticate();
+            new UserResource(JWTAuth::parseToken()->authenticate());
         } catch (\Exception $e) {
             return response()->json(['error' => 'Não autorizado'], 401);
         }

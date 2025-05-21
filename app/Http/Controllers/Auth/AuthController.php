@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
+use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
@@ -25,7 +26,7 @@ class AuthController extends Controller
     public function user()
     {
         $user = JWTAuth::parseToken()->authenticate();
-        return response()->json($user);
+        return new UserResource($user);
     }
 
     public function logout()

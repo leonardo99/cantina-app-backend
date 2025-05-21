@@ -27,4 +27,13 @@ class AuthController extends Controller
         $user = JWTAuth::parseToken()->authenticate();
         return response()->json($user);
     }
+
+    public function logout()
+    {
+        JWTAuth::invalidate(JWTAuth::getToken());
+
+        return response()
+            ->json(['message' => 'Logout efetuado'])
+            ->withCookie(cookie()->forget('token'));
+    }
 }

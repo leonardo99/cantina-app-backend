@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\User\UserController;
 use App\Http\Middleware\JwtMiddleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -29,3 +30,9 @@ Route::controller(AuthController::class)
     
     Route::get('/user', 'user')->middleware(JwtMiddleware::class);
 });
+
+Route::controller(UserController::class)
+->prefix('user')
+->group(function() {
+    Route::post('/', 'store');
+})->middleware(JwtMiddleware::class);

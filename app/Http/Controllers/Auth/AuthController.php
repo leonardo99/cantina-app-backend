@@ -33,7 +33,7 @@ class AuthController extends Controller
         JWTAuth::invalidate(JWTAuth::getToken());
 
         return response()
-            ->json(['message' => 'Logout efetuado'])
+            ->json(['message' => 'Logout efetuado'], 200)
             ->withCookie(cookie()->forget('token'));
     }
 }

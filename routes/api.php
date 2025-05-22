@@ -35,4 +35,4 @@ Route::controller(UserController::class)
 ->prefix('user')
 ->group(function() {
     Route::post('/', 'store');
-})->middleware(JwtMiddleware::class);
+});

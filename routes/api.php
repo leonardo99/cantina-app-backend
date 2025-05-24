@@ -1,7 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\JwtMiddleware;
@@ -46,5 +47,11 @@ Route::prefix('admin')
     ->group(function() {
         Route::get('/', [CategoryController::class, 'index']);
         Route::post('/', [CategoryController::class, 'store']);
+    });
+
+    Route::prefix('/product')
+    ->group(function() {
+        Route::get('/', [ProductController::class, 'index']);
+        Route::post('/', [ProductController::class, 'store']);
     });
 });

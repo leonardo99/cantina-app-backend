@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\User\UserController;
+use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\JwtMiddleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -35,4 +37,14 @@ Route::controller(UserController::class)
 ->prefix('user')
 ->group(function() {
     Route::post('/', 'store');
+});
+
+Route::prefix('admin')
+->middleware(AdminMiddleware::class)
+->group(function () {
+    Route::prefix('/category')
+    ->group(function() {
+        Route::get('/', [CategoryController::class, 'index']);
+        Route::post('/', [CategoryController::class, 'store']);
+    });
 });

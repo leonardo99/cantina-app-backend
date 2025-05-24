@@ -23,7 +23,7 @@ class ProductRequest extends FormRequest
     {
         return [
             "name" => "required|min:2|max:255", 
-            "amount" => "required|decimal:10,2|min:0.01", 
+            "amount" => "required|decimal:0,2|min:0.01", 
             "category_id" => "required|exists:categories,id"
         ];
     }

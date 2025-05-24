@@ -7,7 +7,6 @@ use App\Http\Requests\ProductRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use Exception;
-use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -16,7 +15,15 @@ class ProductController extends Controller
      */
     public function index()
     {
-        
+        try {
+            $products = Product::paginate();
+            if(!$products) {
+                return response()->json([], 204);
+            }
+            return ProductResource::collection($products);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        } 
     }
 
     /**

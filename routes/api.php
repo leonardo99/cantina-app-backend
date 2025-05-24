@@ -24,6 +24,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::controller(UserController::class)
+->prefix('user')
+->group(function() {
+    Route::post('/', 'store');
+});
+
 Route::controller(AuthController::class)
 ->group(function() {
     Route::prefix('auth')->group(function() {
@@ -34,10 +40,11 @@ Route::controller(AuthController::class)
     Route::get('/user', 'user')->middleware(JwtMiddleware::class);
 });
 
-Route::controller(UserController::class)
-->prefix('user')
-->group(function() {
-    Route::post('/', 'store');
+
+Route::prefix('user')
+->middleware(JwtMiddleware::class)
+->group(function () {
+    Route::get('/product', [ProductController::class, 'index']);
 });
 
 Route::prefix('admin')

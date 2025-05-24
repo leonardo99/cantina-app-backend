@@ -53,5 +53,8 @@ Route::prefix('admin')
     ->group(function() {
         Route::get('/', [ProductController::class, 'index']);
         Route::post('/', [ProductController::class, 'store']);
+        Route::prefix('/{product}')->group(function() {
+            Route::put('/update', [ProductController::class, 'update']);
+        });
     });
 });

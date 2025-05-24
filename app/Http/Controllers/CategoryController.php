@@ -15,7 +15,16 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        
+        try {
+            $categories = Category::paginate();
+            if(!$categories) {
+                return response()->json(['error' => 'Ocorreu um erro ao tentar retornar as categorias'], 500);
+            }
+
+            return new CategoryResource($categories);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        } 
     }
 
     /**

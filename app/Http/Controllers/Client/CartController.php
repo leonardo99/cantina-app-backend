@@ -74,7 +74,7 @@ class CartController extends Controller
             if($userCart->items->where("id", $item->id)->count()) {
                 $deleteItem = $item->delete();
             }
-            
+
             if(!$deleteItem) {
                     return response()->json(['error' => 'Ocorreu um erro ao tentar remover o item do carrinho'], 500);
             }

@@ -3,6 +3,8 @@
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ProductByCategoryController;
+use App\Http\Controllers\Client\CartController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\JwtMiddleware;
@@ -44,7 +46,13 @@ Route::controller(AuthController::class)
 Route::prefix('user')
 ->middleware(JwtMiddleware::class)
 ->group(function () {
+    Route::get('category/{category}', [ProductByCategoryController::class, 'index']);
     Route::get('/product', [ProductController::class, 'index']);
+    Route::get('/cart', [CartController::class, 'index']);
+    Route::post('/cart', [CartController::class, 'store']);
+    Route::get('/item/{cartItem}', [CartController::class, 'show']);
+    Route::delete('/cart/{cart}/item/{item}', [CartController::class, 'destroy']);
+
 });
 
 Route::prefix('admin')
@@ -52,6 +60,7 @@ Route::prefix('admin')
 ->group(function () {
     Route::prefix('/category')
     ->group(function() {
+        Route::get('/{category}', [ProductByCategoryController::class, 'index']);
         Route::get('/', [CategoryController::class, 'index']);
         Route::post('/', [CategoryController::class, 'store']);
     });
@@ -61,6 +70,7 @@ Route::prefix('admin')
         Route::get('/', [ProductController::class, 'index']);
         Route::post('/', [ProductController::class, 'store']);
         Route::prefix('/{product}')->group(function() {
+            Route::get('/', [ProductController::class, 'show']);
             Route::put('/update', [ProductController::class, 'update']);
             Route::delete('/delete', [ProductController::class, 'destroy']);
         });

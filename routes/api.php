@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductByCategoryController;
 use App\Http\Controllers\Client\CartController;
+use App\Http\Controllers\Client\OrderController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\JwtMiddleware;
@@ -52,6 +53,8 @@ Route::prefix('user')
     Route::post('/cart', [CartController::class, 'store']);
     Route::get('/item/{cartItem}', [CartController::class, 'show']);
     Route::delete('/cart/{cart}/item/{item}', [CartController::class, 'destroy']);
+    Route::get('/order', [OrderController::class, 'index']);
+    Route::post('/order', [OrderController::class, 'store']);
 
 });
 

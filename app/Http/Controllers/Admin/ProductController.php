@@ -49,6 +49,15 @@ class ProductController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         } 
     }
+    
+    public function show(Product $product)
+    {
+        try {
+            return new ProductResource($product);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        } 
+    }
 
     public function destroy(Product $product)
     {

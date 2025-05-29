@@ -17,9 +17,8 @@ O **Cantina App Backend** é a API desenvolvida com o framework **Laravel** para
 ## Tecnologias Utilizadas
 
 - **Backend**: PHP 8.1+ com o framework Laravel
-- **Banco de Dados**: MySQL ou SQLite
-- **Autenticação**: Laravel Sanctum ou Passport
-- **Testes**: PHPUnit
+- **Banco de Dados**: MySQL
+- **Autenticação**: JWT Token
 - **Gerenciamento de Dependências**: Composer
 
 ---

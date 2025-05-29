@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\ProductByCategoryController;
 use App\Http\Controllers\Client\CartController;
 use App\Http\Controllers\Client\OrderController;
 use App\Http\Controllers\Admin\OrderAdminController;
+use App\Http\Controllers\Client\DepenentController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\JwtMiddleware;
@@ -31,7 +32,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::controller(UserController::class)
 ->prefix('user')
 ->group(function() {
-    Route::post('/', 'store');
+    Route::post('/store', 'store');
 });
 
 Route::controller(AuthController::class)
@@ -48,6 +49,7 @@ Route::controller(AuthController::class)
 Route::prefix('user')
 ->middleware(JwtMiddleware::class)
 ->group(function () {
+    Route::get('/category', [CategoryController::class, 'index']);
     Route::get('category/{category}', [ProductByCategoryController::class, 'index']);
     Route::get('/product', [ProductController::class, 'index']);
     Route::get('/cart', [CartController::class, 'index']);
@@ -56,7 +58,8 @@ Route::prefix('user')
     Route::delete('/cart/{cart}/item/{item}', [CartController::class, 'destroy']);
     Route::get('/order', [OrderController::class, 'index']);
     Route::post('/order', [OrderController::class, 'store']);
-
+    Route::post('/', [DepenentController::class, 'store']);
+    Route::get('/dependent', [DepenentController::class, 'index']);
 });
 
 Route::prefix('admin')

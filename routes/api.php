@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductByCategoryController;
 use App\Http\Controllers\Client\CartController;
 use App\Http\Controllers\Client\OrderController;
+use App\Http\Controllers\Admin\OrderAdminController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\JwtMiddleware;
@@ -61,6 +62,8 @@ Route::prefix('user')
 Route::prefix('admin')
 ->middleware(AdminMiddleware::class)
 ->group(function () {
+    Route::get('/order', [OrderAdminController::class, 'index']);
+
     Route::prefix('/category')
     ->group(function() {
         Route::get('/{category}', [ProductByCategoryController::class, 'index']);

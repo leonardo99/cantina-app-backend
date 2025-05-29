@@ -29,7 +29,7 @@ class Order extends Model
 
     public function items()
     {
-        return $this->hasMany(OrderItems::class);
+        return $this->hasMany(OrderItems::class)->with('items');
     }
 
     public function getTotalValue()

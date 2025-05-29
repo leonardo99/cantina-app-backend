@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('dependents', function (Blueprint $table) {
             $table->id();
             $table->foreignId("user_id")->constrained("users");
-            $table->foreignId("responsible_id")->nullable()->constrained("responsibles");
+            $table->unsignedBigInteger("responsible_id")->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

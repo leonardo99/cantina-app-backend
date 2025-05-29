@@ -19,7 +19,8 @@ class OrderResource extends JsonResource
             'user_id' => $this->user_id,
             'responsible_id' => $this->responsible_id,
             'dependent_id' => $this->dependent_id,
-            'status' => $this->status,
+            'total_value' => $this->getTotalValue(),
+            'status' => $this->getStatus(),
         ];
     }
 }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use NumberFormatter;
 
 class Order extends Model
 {
@@ -29,5 +30,36 @@ class Order extends Model
     public function items()
     {
         return $this->hasMany(OrderItems::class);
+    }
+
+    public function getTotalValue()
+    {
+        $numberFormatter = new NumberFormatter('pt-BR', NumberFormatter::CURRENCY);
+        return $numberFormatter->formatCurrency($this->items()->sum("price"), 'BRL');
+    }
+
+    public function getStatus() 
+    {
+        switch ($this->status) {
+            case 'pending':
+                return "pendente";
+                break;
+            
+                case 'preparing':
+                return "preparando";
+                break;
+                
+                case 'prepared':
+                return "pronto";
+                break;
+
+                case 'delivered':
+                return "entregue";
+                break;
+            
+            default:
+                return "status desconhecido";
+                break;
+        }
     }
 }

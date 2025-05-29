@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 
 class UserRequest extends FormRequest
@@ -26,7 +27,10 @@ class UserRequest extends FormRequest
             'name' => 'required|min:2|max:255',
             'email' => 'required|unique:users|email',
             'type' => 'required|in:student,responsible,admin',
-            'phone' => 'nullable|min:14',
+            'phone' => [
+                Rule::requiredIf(in_array($this->type, ['student', 'responsible'])), 
+                'min:14'
+            ],
             'password' => ['required', 'confirmed', Password::min(8)->mixedCase()],
         ];
     }

@@ -27,4 +27,10 @@ class UserController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
+    public function index()
+    {
+        $users = User::where('type', 'student')->orWhere('type', 'responsible')->get();
+        return UserResource::collection($users);
+    }
 }

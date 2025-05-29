@@ -65,7 +65,10 @@ Route::prefix('user')
 Route::prefix('admin')
 ->middleware(AdminMiddleware::class)
 ->group(function () {
+    Route::get('/users', [UserController::class, 'index']);
+
     Route::get('/order', [OrderAdminController::class, 'index']);
+    Route::patch('/order/{order}', [OrderAdminController::class, 'update']);
 
     Route::prefix('/category')
     ->group(function() {

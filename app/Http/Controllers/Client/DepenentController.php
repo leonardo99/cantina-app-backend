@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Client;
 use App\Actions\Password\GeneratePassword;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DependentRequest;
+use App\Http\Resources\DependentResource;
 use App\Http\Resources\UserResource;
 use App\Models\Dependent;
 use App\Models\User;
@@ -32,7 +33,7 @@ class DepenentController extends Controller
                 
                 $saveDependent = Dependent::firstOrCreate(['user_id' => $saveUser->id], ["responsible_id" => auth()->id()]);
 
-                return new UserResource($saveDependent);
+                return new DependentResource($saveDependent);
             });
 
         } catch (Exception $e) {
@@ -44,12 +45,9 @@ class DepenentController extends Controller
     {
         /** @var \App\Models\User $user */
         $user = auth()->user();
-        $users = User::whereIn('id', function ($query) use ($user) {
-            $query->select('user_id')
-            ->from('dependents')
-            ->where('responsible_id', $user->id);
-        })->paginate();
-
-        return UserResource::collection($users);
+        $dependents = Dependent::with('user')
+        ->where('responsible_id', $user->id)
+        ->paginate();
+        return DependentResource::collection($dependents);
     }
 }

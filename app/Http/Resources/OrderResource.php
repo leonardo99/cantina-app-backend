@@ -22,6 +22,7 @@ class OrderResource extends JsonResource
             'total_value' => $this->getTotalValue(),
             'status' => $this->getStatus(),
             'items' => $this->items,
+            'created_at' => $this->getCreatedAt()
         ];
     }
 }

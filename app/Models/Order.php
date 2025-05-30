@@ -62,4 +62,9 @@ class Order extends Model
                 break;
         }
     }
+
+    public function getCreatedAt()
+    {
+        return $this->created_at->diffForHumans();
+    }
 }

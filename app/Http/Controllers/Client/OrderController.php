@@ -23,8 +23,8 @@ class OrderController extends Controller
             /** @var \App\Models\User $user */
             $user = auth()->user();
             DB::transaction(function() use($request, $user) {
-                $saveOrder = $user->orders()->create(['status' => 'pending']); 
-                $saveOrder->items()->createMany($request->all());
+                $saveOrder = $user->orders()->create(['status' => 'pending', 'dependent_id' => $request->dependent_id]); 
+                $saveOrder->items()->createMany($request->items);
                 $user->cart->delete();
                 return new OrderResource($saveOrder->with('items'));
             });
